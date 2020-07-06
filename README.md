@@ -9,6 +9,8 @@ A lightweight interval plugin for Alpine.js that lets you call a function every 
 
 Useful when you need to change state every n seconds, such as in a slideshow, or even to check on some external data.
 
+**Note: the timer will pause when the browser tab is idle**
+
 ```html
 <!-- Counter example -->
 <div
