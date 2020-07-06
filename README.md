@@ -1,51 +1,52 @@
-### Alpine JS starter template
-Nothing fancy
-1. Alpine
-1. Jest
-1. Laravel Mix with LiveReload
 
-Be sure to do a site wide search/replace for the following:
-```
-{author-name} - Example: Kevin Batdorf
-{github-name} - Example: kevinbatdorf
-{current-year} - Example: 2020
-{package-title} - Example: The title of the package
-{package-description} - Example: The summary
-{package-slug} - Example: The full slug, like kevinbatdorf/alpine-plugin-template
-{package-slug-short} - Example: alpine-plugin-template
-{package-year} - Example: The current year
-```
-TODO: Automate with an npm script like npm run setup or something
+# Alpine — Auto Interval
+A lightweight interval plugin for Alpine.js that lets you call a function every n milliseconds
 
-# {package-title}
-{package-description}
-
-![GitHub file size in bytes](https://img.shields.io/github/size/{package-slug}/dist/index.js?label=minified&style=flat-square)
-![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/{package-slug}?label=version&style=flat-square)
+![GitHub file size in bytes](https://img.shields.io/github/size/kevinbatdorf/alpine-auto-interval/dist/index.js?label=minified&style=flat-square)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/kevinbatdorf/alpine-auto-interval?label=version&style=flat-square)
 
 ## About
 
-When to use?
+Useful when you need to change state every n seconds, such as in a slideshow, or even to check on some external data.
 
 ```html
-<div x-data="{}">
+<!-- Counter example -->
+<div
+  x-data="{ count: 0, add() { this.count++ } }"
+  x-alpine-interval="add"
+  x-text="count">
 </div>
 ```
-```js
-function functionName() {
-  return {
-    foo: 'bar'
-  }
-}
+[Demo](https://codepen.io/KevinBatdorf/pen/816d973df4cd45d060999c7dab8ceb98?editors=1000)
+
+The timer defaults to 1000ms but you can pass in parameters to override
+```html
+<!-- Counter example with timer adjusted -->
+<div
+  x-data="{ count: 0, add() { this.count++ } }"
+  x-alpine-interval="{ callback: 'add', timer: 3000 }"
+  x-text="count">
+</div>
 ```
-[Demo](url)
+[Demo](https://codepen.io/KevinBatdorf/pen/41aa6f9dddc37036ead75c086fb8f7c7?editors=1000)
+
+The delay defaults to the timer but you can pass in parameters to override.
+```html
+<!-- Counter example with delay adjusted  -->
+<div
+  x-data="{ count: 0, add() { this.count++ } }"
+  x-alpine-interval="{ callback: 'add', delay: 3000 }"
+  x-text="count">
+</div>
+```
+[Demo](https://codepen.io/KevinBatdorf/pen/20a55f4c172e86aa11d16de192475391?editors=1000)
 
 ## Installation
 
 Include the following `<script>` tag in the `<head>` of your document (before Alpine):
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/{package-slug}@0.x.x/dist/index.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/kevinbatdorf/alpine-auto-interval@0.x.x/dist/index.js"></script>
 ```
 
 ### Manual
@@ -53,18 +54,18 @@ Include the following `<script>` tag in the `<head>` of your document (before Al
 If you wish to create your own bundle:
 
 ```bash
-npm install {package-slug} --save
+npm install kevinbatdorf/alpine-auto-interval --save
 ```
 
 Then add the following to your script:
 
 ```javascript
-import '{package-slug-short}'
+import 'alpine-auto-interval'
 import 'alpinejs'
 ```
 
 ## License
 
-Copyright (c) {current-year} {author-name}
+Copyright (c) 2020 Kevin Batdorf
 
 Licensed under the MIT license, see [LICENSE.md](LICENSE.md) for details.

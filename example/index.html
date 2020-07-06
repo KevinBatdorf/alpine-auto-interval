@@ -5,12 +5,105 @@
 	<script nomodule src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine-ie11.min.js" defer></script>
 	<script src="../dist/index.js"></script>
 	<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-
+	<script>
+		const images = [
+			'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&h=300',
+			'https://images.unsplash.com/photo-1514989940723-e8e51635b782?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&h=300',
+			'https://images.unsplash.com/photo-1516478177764-9fe5bd7e9717?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&h=300',
+		]
+	</script>
 </head>
 
-<body class="flex items-center justify-center">
-	
-	<div x-data="{}"></div>
+<body class="flex flex-col items-center justify-center text-center">
+
+	<p class="text-center mb-2">Obligatory counter example</p>
+	<p>Default 1000ms timer and no delay<br>
+		<span
+			x-data="{ count: 0, add() { this.count++ } }"
+			x-alpine-interval="add"
+			x-text="count"></span>
+	</p>
+	<p>Custom 3000ms timer no delay:<br>
+		<span
+			x-data="{ count: 0, add() { this.count++ } }"
+			x-alpine-interval="{ callback: 'add', timer: 3000 }"
+			x-text="count"></span>
+	</p>
+	<p>Custom 3000ms delay with 1000ms timer:<br>
+		<span
+			x-data="{ count: 0, add() { this.count++ } }"
+			x-alpine-interval="{ callback: 'add', delay: 3000 }"
+			x-text="count"></span>
+	</p>
+
+	<hr class="h-1 bg-gray-300 w-full my-8">
+
+	<p class="text-center mb-2">Loop every 1 second (default) with no animations</p>
+	<div
+		class="relative overflow-hidden"
+		style="width:400px;height:300px"
+		x-alpine-interval="rotate"
+		x-data="{
+			current: 0,
+			images: images,
+			rotate() {
+				this.current = (this.current === (this.images.length - 1)) ? 0 : this.current + 1
+			},
+		}">
+		<template x-for="(image, index) in images">
+			<img
+				class="absolute inset-0"
+				x-show="current == index"
+				:src="image"
+				alt="">
+		</template>
+	</div>
+
+	<hr class="h-1 bg-gray-300 w-full my-8">
+
+	<p class="text-center mb-2">Loop every 3 seconds with 1 second animation</p>
+	<div
+		class="relative overflow-hidden"
+		style="width:400px;height:300px"
+		x-alpine-interval="{callback: 'rotate', timer: 3000}"
+		x-data="{
+			current: 0,
+			images: images,
+			rotate() {
+				this.current = (this.current === (this.images.length - 1)) ? 0 : this.current + 1
+			},
+		}">
+		<template x-for="(image, index) in images">
+			<img
+				class="absolute inset-0"
+				x-show.transition.opacity.duration.1000="current == index"
+				:src="image"
+				alt="">
+		</template>
+	</div>
+
+	<hr class="h-1 bg-gray-300 w-full my-8">
+
+	<p class="text-center mb-2">Loop every 3 seconds with 1.5 second animation, after 5 second delay</p>
+	<div
+		class="relative overflow-hidden"
+		style="width:400px;height:300px"
+		x-alpine-interval="{callback: 'rotate', timer: 3000, delay: 5000}"
+		x-data="{
+			current: 0,
+			images: images,
+			rotate() {
+				this.current = (this.current === (this.images.length - 1)) ? 0 : this.current + 1
+			},
+		}">
+		<template x-for="(image, index) in images">
+			<img
+				class="absolute inset-0"
+				x-show.transition.opacity.duration.1500="current == index"
+				:src="image"
+				alt="">
+		</template>
+	</div>
 
 	<script src="http://localhost:35729/livereload.js"></script>
 </body>
