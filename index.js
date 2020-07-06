@@ -6,12 +6,14 @@ function AlpineAutoInterval() {
 		let functionName = alpineComponent.getAttribute('x-alpine-interval').replace(/[()]/g, '') // Remove ()
 		let timer = 1000
 		let delay = 0
+		let forceInterval = false
 		if (functionName.indexOf('{') === 0) {
 			// convert to JSON in case it's an object
 			functionNameObject = JSON.parse(functionName.replace(/([a-zA-Z0-9]+?):/g, '"$1":').replace(/'/g, '"'))
 			functionName = functionNameObject['callback']
 			timer = functionNameObject['timer'] ? functionNameObject['timer'] : timer
 			delay = functionNameObject['delay'] ? functionNameObject['delay'] - timer : 0
+			forceInterval = functionNameObject['forceInterval'] === 'true' ? true : false
 		}
 
 		alpineComponent.setAttribute(
@@ -28,11 +30,11 @@ function AlpineAutoInterval() {
 					},
 					bubbles: true,
 				}))
-				requestAnimationFrame(loop)
+				forceInterval ? loop() : requestAnimationFrame(loop)
 			}, timer)
 		}
 		setTimeout(() => {
-			requestAnimationFrame(loop)
+			forceInterval ? loop() : requestAnimationFrame(loop)
 		}, delay)
 	})
 }
