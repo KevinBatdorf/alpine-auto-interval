@@ -1,4 +1,6 @@
 
+Use the `$interval()` Magic Helper instead: https://github.com/alpine-collective/alpine-magic-helpers
+
 # Alpine — Auto Interval
 A lightweight interval plugin for Alpine.js that lets you call a function every n milliseconds
 
