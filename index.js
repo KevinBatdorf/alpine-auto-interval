@@ -1,3 +1,5 @@
+'use strict';
+
 function AlpineAutoInterval() {
 	Array.from(document.querySelectorAll('[x-alpine-interval]')).forEach(alpineComponent => {
 		const id = Date.now() + Math.floor(Math.random() * 1000000)
@@ -9,7 +11,7 @@ function AlpineAutoInterval() {
 		let forceInterval = false
 		if (functionName.indexOf('{') === 0) {
 			// convert to JSON in case it's an object
-			functionNameObject = JSON.parse(functionName.replace(/([a-zA-Z0-9]+?):/g, '"$1":').replace(/'/g, '"'))
+			const functionNameObject = JSON.parse(functionName.replace(/([a-zA-Z0-9]+?):/g, '"$1":').replace(/'/g, '"'))
 			functionName = functionNameObject['callback']
 			timer = functionNameObject['timer'] ? functionNameObject['timer'] : timer
 			delay = functionNameObject['delay'] ? functionNameObject['delay'] - timer : 0
